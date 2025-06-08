@@ -1,0 +1,57 @@
+{% load static %}
+
+<section class="homepage-hero">
+  <div class="container-fluid">
+    <!-- Slider main container -->
+    <div class="swiper homepage-hero-swiper">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide snack-card" data-bs-toggle="modal" data-bs-target="#snackModal" data-snack-id="9" data-snack-name="Rice Cakes with Avocado" data-snack-description="Mini rice cakes topped with avocado spread" data-snack-price="3.25" data-snack-image="/media/snacks/avocado-rice-cake_cw6M58P.webp" data-snack-vegan="true" data-snack-gluten-free="true" data-snack-nut-free="true">
+          <div class="home-slider-banner">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+              <p class="first">Rice Cakes with Avocado </p>
+              <p class="second"><i class="fas fa-arrow-circle-right"></i></p>
+            </div>
+             <img src="media/snack_images/avocado-rice-cake_cw6M58P.webp" alt="">
+          </div>
+        </div>
+        <div class="swiper-slide snack-card" data-bs-toggle="modal" data-bs-target="#snackModal" data-snack-id="20" data-snack-name="Vegan Brownie Bites" data-snack-description="Rich chocolate brownie bites, vegan-friendly" data-snack-price="5.20" data-snack-image="/media/snack_images/vegan-brownie-bites_lDg4ffR.webp" data-snack-vegan="true" data-snack-gluten-free="true" data-snack-nut-free="false">
+          <div class="home-slider-banner">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+            <p class="first">Vegan Brownie Bites</p>
+              <p class="second"><i class="fas fa-arrow-circle-right"></i></p>
+            </div>
+            <img src="media/snack_images/vegan-brownie-bites_lDg4ffR.webp" alt="">
+          </div>
+        </div>
+        
+        <div class="swiper-slide snack-card" data-bs-toggle="modal" data-bs-target="#snackModal" data-snack-id="40" data-snack-name="Zucchini Chips" data-snack-description="Baked zucchini chips with sea salt" data-snack-price="3.70" data-snack-image="/media/snacks/zucchini_chips_tYtNvLG.webp" data-snack-vegan="true" data-snack-gluten-free="true" data-snack-nut-free="true">
+          <div class="home-slider-banner">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+              <p class="first">Zucchini Chips</p>
+              <p class="second"><i class="fas fa-arrow-circle-right"></i></p>
+
+            </div>
+            <img src="media/snack_images/zucchini_chips_tYtNvLG.webp" alt="">
+          </div>
+        </div>
+      </div>
+      <!-- If we need pagination -->
+      {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
+
+      <!-- If we need navigation buttons -->
+      {% comment %} <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> {% endcomment %}
+
+      <!-- If we need scrollbar -->
+      {% comment %} <div class="swiper-scrollbar"></div> {% endcomment %}
+    </div>
+  </div>
+</section>
+
+
+

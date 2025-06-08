@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnackBox | Search Results</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'core/img/favicon.ico' %}" type="image/x-icon">
+</head>
+<body class="search-results-page">
+  <!-- Navbar -->
+  {% include "core/components/navbar_internal.html" %}
+
+  <!-- Search Results Section -->
+  <section class="search-results-section">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h6 class="heading-color m-0 d-none d-md-block">SEARCH RESULTS</h6>
+        <a href="{% url 'home' %}" class="back-btn"><i class="fa fa-arrow-left pe-1"></i> Home</a>
+      </div>
+
+      <!-- Filter Button for Mobile -->
+      <div class="d-md-none mb-3 d-flex justify-content-between align-items-center">
+        <h6 class="heading-color m-0">SEARCH RESULTS</h6>
+        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas" aria-controls="filterOffcanvas">
+          <i class="fa-solid fa-sliders me-1"></i> Filter
+        </button>
+      </div>
+
+      <div class="row">
+        <!-- Left Sidebar: Filters (Hidden on Mobile) -->
+        <div class="col-md-3 sidebar d-none d-md-block">
+          <!-- Search, Sort, and Filter Controls -->
+          <form method="get" action="{% url 'search_results' %}" class="mb-4" id="filterForm">
+            <!-- Search Bar -->
+            <div class="mb-3">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search snacks..." value="{{ query }}" />
+                <button type="submit" class="btn purple-button">Search</button>
+              </div>
+            </div>
+
+            <!-- Sort Dropdown -->
+            <div class="mb-3">
+              <select name="sort" class="form-select" onchange="this.form.submit()">
+                <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+                <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+              </select>
+            </div>
+
+            <!-- Category Dropdown -->
+            <div class="mb-3">
+              <select name="category" class="form-select" onchange="this.form.submit()">
+                <option value="">All Categories</option>
+                {% for slug, display in categories %}
+                  <option value="{{ slug }}" {% if category == slug %}selected{% endif %}>{{ display }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Dietary Filters -->
+            <div class="mb-3">
+              <h6>Dietary Preferences</h6>
+              <div class="form-check">
+                <input type="checkbox" name="is_vegan" class="form-check-input" id="veganFilter" {% if is_vegan %}checked{% endif %} onchange="this.form.submit()" />
+                <label class="form-check-label" for="veganFilter">Vegan</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" name="is_gluten_free" class="form-check-input" id="glutenFreeFilter" {% if is_gluten_free %}checked{% endif %} onchange="this.form.submit()" />
+                <label class="form-check-label" for="glutenFreeFilter">Gluten-Free</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" name="is_nut_free" class="form-check-input" id="nutFreeFilter" {% if is_nut_free %}checked{% endif %} onchange="this.form.submit()" />
+                <label class="form-check-label" for="nutFreeFilter">Nut-Free</label>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right Content: Snack Listing -->
+        <div class="col-md-9">
+          {% if snacks %}
+            <div class="row">
+              {% for snack in snacks %}
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4 mb-4">
+                  <div class="card h-100 snack-card" data-bs-toggle="modal" data-bs-target="#snackModal" 
+                       data-snack-id="{{ snack.id }}"
+                       data-snack-name="{{ snack.name }}" 
+                       data-snack-description="{{ snack.description }}" 
+                       data-snack-price="{{ snack.price }}"
+                       data-snack-image="{% if snack.image %}{{ snack.image.url }}{% else %}{% static 'core/img/placeholder.png' %}{% endif %}"
+                       data-snack-vegan="{{ snack.is_vegan|yesno:'true,false' }}"
+                       data-snack-gluten-free="{{ snack.is_gluten_free|yesno:'true,false' }}"
+                       data-snack-nut-free="{{ snack.is_nut_free|yesno:'true,false' }}">
+                    <div class="card-body">
+                      {% if snack.image %}
+                        <img src="{{ snack.image.url }}" class="card-img-top" alt="{{ snack.name }}">
+                      {% else %}
+                        <img src="{% static 'core/img/placeholder.png' %}" class="card-img-top" alt="{{ snack.name }}">
+                      {% endif %}
+                      <h5 class="card-title">{{ snack.name }}</h5>
+                      <p class="card-text snack-description">{{ snack.description }}</p>
+                      <p class="card-text"><strong>Price:</strong> ${{ snack.price }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="text-center nosnacks">No snacks match your criteria.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Offcanvas for Mobile -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="filterOffcanvas" aria-labelledby="filterOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="filterOffcanvasLabel">Filters</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <!-- Filter Form -->
+      <form method="get" action="{% url 'search_results' %}" id="offcanvasFilterForm">
+        <!-- Search Bar -->
+        <div class="mb-3">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search snacks..." value="{{ query }}" />
+            <button type="submit" class="btn purple-button">Search</button>
+          </div>
+        </div>
+        <!-- Sort Dropdown -->
+        <div class="mb-3">
+          <select name="sort" class="form-select">
+            <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+            <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+            <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price (Low to High)</option>
+            <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price (High to Low)</option>
+          </select>
+        </div>
+        <!-- Category Dropdown -->
+        <div class="mb-3">
+          <select name="category" class="form-select">
+            <option value="">All Categories</option>
+            {% for slug, display in categories %}
+              <option value="{{ slug }}" {% if category == slug %}selected{% endif %}>{{ display }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <!-- Dietary Filters -->
+        <div class="mb-3">
+          <label class="form-label">Dietary Preferences</label>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="offcanvasVeganFilter" name="is_vegan" {% if is_vegan %}checked{% endif %} />
+            <label class="form-check-label" for="offcanvasVeganFilter">Vegan</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="offcanvasGlutenFreeFilter" name="is_gluten_free" {% if is_gluten_free %}checked{% endif %} />
+            <label class="form-check-label" for="offcanvasGlutenFreeFilter">Gluten-Free</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="offcanvasNutFreeFilter" name="is_nut_free" {% if is_nut_free %}checked{% endif %} />
+            <label class="form-check-label" for="offcanvasNutFreeFilter">Nut-Free</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Snack Modal -->
+  <div class="modal fade" id="snackModal" tabindex="-1" aria-labelledby="snackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn btn-link text-dark" data-bs-dismiss="modal" aria-label="Back">
+            <i class="fa fa-arrow-left"></i>
+          </button>
+          <h5 class="modal-title" id="snackModalLabel"></h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Image on the left -->
+            <div class="col-md-6 mb-3 mb-md-0">
+              <img id="modal-snack-image" src="" class="img-fluid" alt="Snack Image">
+            </div>
+            <!-- Details on the right -->
+            <div class="col-md-6">
+              <input type="hidden" id="modal-snack-id">
+              <h5 id="modal-snack-name" class="mb-3"></h5>
+              <p id="modal-snack-description" class="mb-3"></p>
+              <p class="mb-3"><strong>Price:</strong> $<span id="modal-snack-price"></span></p>
+              <div id="modal-dietary-tags" class="dietary-tags mb-3">
+                <!-- Dietary tags will be populated here -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div id="cart-controls">
+            <button type="button" class="btn btn-primary" id="add-to-cart-btn">Add to Cart</button>
+            <div id="quantity-controls" style="display: none;">
+              <button type="button" class="btn btn-outline-primary btn-sm" id="decrease-quantity">-</button>
+              <span id="cart-quantity" class="mx-2">1</span>
+              <button type="button" class="btn btn-outline-primary btn-sm" id="increase-quantity">+</button>
+              <a href="{% url 'cart' %}" class="btn btn-success ms-2">Proceed to Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  {% include "core/components/footer.html" %}
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    // Populate modal with snack details
+    document.querySelectorAll('.snack-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-snack-id');
+        const name = card.getAttribute('data-snack-name');
+        const description = card.getAttribute('data-snack-description');
+        const price = card.getAttribute('data-snack-price');
+        const image = card.getAttribute('data-snack-image');
+        const isVegan = card.getAttribute('data-snack-vegan') === 'true';
+        const isGlutenFree = card.getAttribute('data-snack-gluten-free') === 'true';
+        const isNutFree = card.getAttribute('data-snack-nut-free') === 'true';
+
+        document.getElementById('modal-snack-id').value = id;
+        document.getElementById('modal-snack-name').textContent = name;
+        document.getElementById('snackModalLabel').textContent = name;
+        document.getElementById('modal-snack-description').textContent = description;
+        document.getElementById('modal-snack-price').textContent = price;
+        document.getElementById('modal-snack-image').src = image;
+
+        const dietaryTags = document.getElementById('modal-dietary-tags');
+        dietaryTags.innerHTML = '';
+        if (isVegan) dietaryTags.innerHTML += '<span class="badge bg-success me-1">Vegan</span>';
+        if (isGlutenFree) dietaryTags.innerHTML += '<span class="badge bg-info me-1">Gluten-Free</span>';
+        if (isNutFree) dietaryTags.innerHTML += '<span class="badge bg-warning me-1">Nut-Free</span>';
+
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        const quantityControls = document.getElementById('quantity-controls');
+        const cartQuantity = document.getElementById('cart-quantity');
+        addToCartBtn.style.display = 'block';
+        quantityControls.style.display = 'none';
+        cartQuantity.textContent = '1';
+      });
+    });
+
+    // Add to Cart functionality
+    let currentQuantity = 0;
+
+    function updateCart(snackId, quantity) {
+      fetch("{% url 'add_to_cart' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ snack_id: snackId, quantity: quantity })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status !== 'success') {
+          alert(data.message || 'Failed to add to cart. Please try again.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+      });
+    }
+
+    document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+      const snackId = document.getElementById('modal-snack-id').value;
+      currentQuantity = 1;
+      document.getElementById('cart-quantity').textContent = currentQuantity;
+      document.getElementById('add-to-cart-btn').style.display = 'none';
+      document.getElementById('quantity-controls').style.display = 'flex';
+      updateCart(snackId, 1);
+    });
+
+    document.getElementById('increase-quantity').addEventListener('click', () => {
+      const snackId = document.getElementById('modal-snack-id').value;
+      currentQuantity += 1;
+      document.getElementById('cart-quantity').textContent = currentQuantity;
+      updateCart(snackId, 1);
+    });
+
+    document.getElementById('decrease-quantity').addEventListener('click', () => {
+      const snackId = document.getElementById('modal-snack-id').value;
+      currentQuantity -= 1;
+      if (currentQuantity <= 0) {
+        currentQuantity = 0;
+        document.getElementById('add-to-cart-btn').style.display = 'block';
+        document.getElementById('quantity-controls').style.display = 'none';
+        updateCart(snackId, -1);
+      } else {
+        document.getElementById('cart-quantity').textContent = currentQuantity;
+        updateCart(snackId, -1);
+      }
+    });
+
+    // Sync offcanvas checkboxes with main form when offcanvas is opened
+    document.getElementById('filterOffcanvas').addEventListener('show.bs.offcanvas', () => {
+      document.getElementById('offcanvasVeganFilter').checked = document.getElementById('veganFilter').checked;
+      document.getElementById('offcanvasGlutenFreeFilter').checked = document.getElementById('glutenFreeFilter').checked;
+      document.getElementById('offcanvasNutFreeFilter').checked = document.getElementById('nutFreeFilter').checked;
+      document.querySelector('#offcanvasFilterForm [name="sort"]').value = document.querySelector('#filterForm [name="sort"]').value;
+      document.querySelector('#offcanvasFilterForm [name="category"]').value = document.querySelector('#filterForm [name="category"]').value;
+      document.querySelector('#offcanvasFilterForm [name="q"]').value = document.querySelector('#filterForm [name="q"]').value;
+    });
+
+    // Update main form checkboxes when offcanvas form is submitted
+    document.getElementById('offcanvasFilterForm').addEventListener('submit', () => {
+      document.getElementById('veganFilter').checked = document.getElementById('offcanvasVeganFilter').checked;
+      document.getElementById('glutenFreeFilter').checked = document.getElementById('offcanvasGlutenFreeFilter').checked;
+      document.getElementById('nutFreeFilter').checked = document.getElementById('offcanvasNutFreeFilter').checked;
+      document.querySelector('#filterForm [name="sort"]').value = document.querySelector('#offcanvasFilterForm [name="sort"]').value;
+      document.querySelector('#filterForm [name="category"]').value = document.querySelector('#offcanvasFilterForm [name="category"]').value;
+      document.querySelector('#filterForm [name="q"]').value = document.querySelector('#offcanvasFilterForm [name="q"]').value;
+    });
+  </script>
+</body>
+</html>

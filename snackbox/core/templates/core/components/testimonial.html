@@ -1,0 +1,218 @@
+{% load static%}
+
+
+
+<section class="testimonials-section py-5 px-0">
+  <div class="container-fluid">
+   
+    <h5 class="section-title">WHAT OUR CUSTOMERS SAY</h5>
+
+    <div class="swiper testimonials-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+           
+            <p class="testimonial-text">
+              "Snack Box made finding vegan snacks so easy! The filters are a lifesaver, and the site is super fast. Highly recommend!"
+            </p>
+            <h5 class="customer-name mt-3"><span class="pe-2">-</span>Aarav Sharma</h5>
+             <div class="star-rating mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            
+            <p class="testimonial-text">
+              "I love the variety of snacks available. The interface is clean, and I can quickly find gluten-free options. Great job!"
+            </p>
+            <h5 class="customer-name mt-3"><span class="pe-2">-</span>Priya Verma</h5>
+            <div class="star-rating mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+           
+            <p class="testimonial-text">
+              "The real-time filtering is amazing! I found nut-free snacks for my kids in seconds. Snack Box is now my go-to!"
+            </p>
+            <h5 class="customer-name mt-3"><span class="pe-2">-</span>Riya Nair</h5>
+             <div class="star-rating mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Initialize Swiper -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const swiper = new Swiper('.testimonials-swiper', {
+     
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      spaceBetween: 20,
+      slidesPerView: 1, // Default for mobile
+      grabCursor: true,
+      breakpoints: {
+        // Desktop (768px and above)
+        768: {
+          slidesPerView: 2, // Show 2 cards on desktop
+          spaceBetween: 30,
+        },
+      },
+    });
+  });
+</script>
+
+<style>
+  .testimonials-section {
+    background-color: #f8f9fa;
+  }
+
+  .section-subtitle {
+    font-weight: 600;
+    color:rgb(134, 49, 213);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    justify-content: center;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 40px;
+    color:#7e57c2;
+  }
+
+  .testimonial-card {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%; /* Ensure card takes full available width */
+    border:1px solid #a855f7;
+  }
+
+  .star-rating {
+    color: #f1c40f;
+    font-size: 1.2rem;
+    text-align:end;
+  }
+
+  .star-rating i {
+    margin: 0 2px;
+  }
+
+  .testimonial-text {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align:justify;
+
+  }
+
+  .customer-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #7e57c2;
+    text-align:end;
+
+  }
+
+  .swiper {
+    min-height: 300px;
+  }
+
+  .swiper-slide {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .swiper-pagination {
+    bottom: -3px !important;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: #a855f7 !important;
+    width: 30px !important; /* Wider width for rectangular shape */
+    height: 4px !important; /* Smaller height for bar shape */
+    border-radius: 2px !important; /* Slight rounding for a polished look */
+    margin: 0 5px !important;
+    opacity: 0.5 !important;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: #7e57c2 !important;
+    opacity: 1 !important;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 767px) {
+    .section-title {
+      font-size: 1rem;
+    }
+
+    .testimonial-card {
+      padding: 20px 15px;
+      min-height: 260px;
+    }
+
+    .testimonial-text {
+      font-size: 0.9rem;
+      -webkit-line-clamp: 3;
+    }
+
+    .swiper,
+    .swiper-slide {
+      min-height: 280px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-card {
+      padding: 30px 25px; /* Slightly more padding on desktop */
+    }
+  }
+</style>

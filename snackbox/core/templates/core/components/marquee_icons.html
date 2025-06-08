@@ -1,0 +1,215 @@
+<div class="wrapper m-2">
+  <div class="marquee" data-speed="60">
+    <div class="marquee__ctn">
+      <div class="marquee__track">
+        <div class="marquee__item">
+          <i class="fas fa-wheat-awn"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-leaf"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-bowl-food"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-apple-whole"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-carrot"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-bolt"></i>
+        </div>
+      </div>
+      <div class="marquee__track" aria-hidden="true">
+        <div class="marquee__item">
+          <i class="fas fa-wheat-awn"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-leaf"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-bowl-food"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-apple-whole"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-carrot"></i>
+        </div>
+        <div class="marquee__item">
+          <i class="fas fa-bolt"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    --color-primary: purple;
+    accent-color: var(--color-primary);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .wrapper {
+    width: 100%;
+    
+  }
+
+  .marquee {
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(
+      var(--mask-direction, to right),
+      hsl(0 0% 0% / 0),
+      hsl(0 0% 0% / 1) 10%,
+      hsl(0 0% 0% / 1) 90%,
+      hsl(0 0% 0% / 0)
+    );
+  }
+
+  .marquee__ctn {
+    display: flex;
+    width: 100%;
+  }
+
+  .marquee__track {
+    display: flex;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .marquee__ctn {
+      transform: translate3d(0, 0, 0) scale(1);
+      perspective: 1px;
+    }
+  }
+
+  .marquee__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 50px;
+    margin-inline-end: 3rem;
+  
+  }
+
+  .marquee__item i {
+    font-size: 20px; /* Very small icons */
+    color: #a855f7;
+  }
+
+  /* Mobile (≤576px) */
+  @media (max-width: 576px) {
+    .marquee__item {
+      width: 30px;
+      margin-inline-end: 1rem;
+    }
+    .marquee__item i {
+      font-size: 12px;
+    }
+  }
+
+  /* Tablet (577px–768px) */
+  @media (min-width: 577px) and (max-width: 768px) {
+    .marquee__item {
+      width: 80px;
+      margin-inline-end: 2rem;
+    }
+    .marquee__item i {
+      font-size: 18px;
+    }
+  }
+</style>
+
+<script>
+  class LogosMarquee {
+    constructor({
+      containerSelector = ".marquee__ctn",
+      trackSelector = ".marquee__track",
+      speed = 60
+    } = {}) {
+      this.container = document.querySelector(containerSelector);
+      this.track = document.querySelector(trackSelector);
+      this.speed = speed;
+
+      if (!this.container || !this.track) {
+        console.warn("Marquee: éléments introuvables.");
+        return;
+      }
+
+      this.trackWidth = this.track.getBoundingClientRect().width;
+      this.pos = 0;
+      this.start = null;
+      this.rafId = null;
+
+      this.setup();
+      this.animate = this.animate.bind(this);
+      requestAnimationFrame(this.animate);
+    }
+
+    setup() {
+      this.container.style.width = `${this.trackWidth}px`;
+      this.clone = this.track.cloneNode(true);
+      this.container.appendChild(this.clone);
+      this.container.style.willChange = "transform";
+    }
+
+    animate(timestamp) {
+      if (!this.start) this.start = timestamp;
+
+      const elapsed = timestamp - this.start;
+      this.pos = -(elapsed / 1000) * this.speed;
+
+      if (Math.abs(this.pos) >= this.trackWidth) {
+        this.start = timestamp;
+        this.pos = 0;
+      }
+
+      this.container.style.transform = `translateX(${this.pos}px)`;
+      this.rafId = requestAnimationFrame(this.animate);
+    }
+
+    destroy() {
+      cancelAnimationFrame(this.rafId);
+      if (this.clone) this.clone.remove();
+      this.container.style.transform = "";
+      this.container.style.willChange = "";
+    }
+  }
+
+  window.addEventListener("load", () => {
+    const marquee = new LogosMarquee({
+      containerSelector: ".marquee__ctn",
+      trackSelector: ".marquee__track",
+      speed: 40
+    });
+  });
+</script>

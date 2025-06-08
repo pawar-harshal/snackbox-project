@@ -1,0 +1,282 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnackBox | Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'core/img/favicon.ico' %}" type="image/x-icon">
+
+
+</head>
+
+<body class="home-page">
+  <!-- Navbar -->
+  {% include "core/components/navbar_internal.html" %}
+
+  {% comment %} Homepage Section {% endcomment %}
+  <section class="homepage-wrapper container-fluid">
+    <!-- Hero Section -->
+    {% include "core/components/hero.html" %}
+
+
+
+
+
+
+
+    <!-- Food Listing -->
+    <section class="food-listing-homepage py-4">
+      <div class="container-fluid">
+        {% if categories %}
+        {% for category, data in categories.items %}
+        <div class="mb-5">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="{% url 'category_detail' category|slugify|lower|cut:' & ' %}" class="text-decoration-none">
+              <h6 class="mb-0 heading-color">{{ category|upper}}</h6>
+            </a>
+
+            {% if data.total_count > 2 %}
+            <a href="{% url 'category_detail' category|slugify|lower|cut:' & ' %}"
+              class="text-decoration-none view-more-btn">EXPLORE <i class="fa fa-arrow-right ps-1"></i></a>
+            {% endif %}
+          </div>
+          <div class="row">
+            {% for snack in data.snacks %}
+            <div
+              class="col-6 col-sm-6 col-md-4 col-lg-2 mb-4 p-0 {% if forloop.counter > 2 %}d-none d-sm-block{% endif %}">
+              <div class="card h-100 snack-card" data-bs-toggle="modal" data-bs-target="#snackModal"
+                data-snack-id="{{ snack.id }}" data-snack-name="{{ snack.name }}"
+                data-snack-description="{{ snack.description }}" data-snack-price="{{ snack.price }}"
+                data-snack-image="{% if snack.image %}{{ snack.image.url }}{% else %}{% static 'core/img/placeholder.png' %}{% endif %}"
+                data-snack-vegan="{{ snack.is_vegan|yesno:'true,false' }}"
+                data-snack-gluten-free="{{ snack.is_gluten_free|yesno:'true,false' }}"
+                data-snack-nut-free="{{ snack.is_nut_free|yesno:'true,false' }}"
+                data-snack-category="{{ snack.get_category_display  }}">
+                <div class="card-body">
+                  {% if snack.image %}
+                  <img src="{{ snack.image.url }}" class="card-img-top" alt="{{ snack.name }}">
+                  {% else %}
+                  <img src="{% static 'core/img/placeholder.png' %}" class="card-img-top" alt="{{ snack.name }}">
+                  {% endif %}
+                  <h5 class="card-title">{{ snack.name }}</h5>
+                  <p class="card-text snack-description">{{ snack.description }}</p>
+                  {% comment %} <p class="card-text"><strong>Price:</strong> ${{ snack.price }}</p> {% endcomment %}
+                </div>
+              </div>
+            </div>
+            {% if forloop.parentloop.counter == 1 and forloop.counter == 6 %}
+            <!-- {% include "core/components/marquee_icons.html" %} -->
+            {% endif %}
+
+
+
+            {% if forloop.parentloop.counter == 7 and forloop.counter == 2 %}
+            {% endif %}
+
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="text-center">No snacks available at the moment.</p>
+        {% endif %}
+      </div>
+    </section>
+
+
+
+    <!-- Snack Modal -->
+    <div class="modal fade" id="snackModal" tabindex="-1" aria-labelledby="snackModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn btn-link text-dark" data-bs-dismiss="modal" aria-label="Back">
+              <i class="fa fa-arrow-left fs-4 "></i>
+            </button>
+            <h6 class="modal-title"></h6>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <!-- Image on the left -->
+              <div class="col-md-6 mb-3 mb-md-0">
+                <img id="modal-snack-image" src="" class="img-fluid" alt="Snack Image">
+              </div>
+              <!-- Details on the right -->
+              <div class="col-md-6">
+                <input type="hidden" id="modal-snack-id">
+                <h5 id="modal-snack-name" class="mb-3"></h5>
+                <p id="modal-snack-description" class="mb-3"></p>
+                <p class="mb-3"><strong>Price:</strong> $<span id="modal-snack-price"></span></p>
+                <div id="modal-dietary-tags" class="dietary-tags mb-3">
+                  <!-- Dietary tags will be populated here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div id="cart-controls">
+              <button type="button" class="btn btn-primary" id="add-to-cart-btn">Add to Cart</button>
+              <div id="quantity-controls" style="display: none;">
+                <button type="button" class="btn btn-outline-primary btn-sm" id="decrease-quantity">-</button>
+                <span id="cart-quantity" class="mx-2">1</span>
+                <button type="button" class="btn btn-outline-primary btn-sm" id="increase-quantity">+</button>
+                <a href="{% url 'cart' %}" class="btn btn-success ms-2">Proceed to Cart</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include "core/components/testimonial.html" %}
+
+
+  <!-- Footer -->
+  {% include "core/components/footer.html" %}
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+  <!-- Swiper JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+  <script>
+    // Homepage hero section
+    const swiper = new Swiper('.homepage-hero-swiper', {
+      direction: 'horizontal',
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      scrollbar: {
+        el: '.swiper-scrollbar',
+      },
+    });
+
+    // Populate modal with snack details
+    document.querySelectorAll('.snack-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-snack-id');
+        const name = card.getAttribute('data-snack-name');
+        const description = card.getAttribute('data-snack-description');
+        const price = card.getAttribute('data-snack-price');
+        const image = card.getAttribute('data-snack-image');
+        const isVegan = card.getAttribute('data-snack-vegan') === 'true';
+        const isGlutenFree = card.getAttribute('data-snack-gluten-free') === 'true';
+        const isNutFree = card.getAttribute('data-snack-nut-free') === 'true';
+        const category = card.getAttribute('data-snack-category');
+
+        // Populate basic details
+        document.getElementById('modal-snack-id').value = id;
+        document.getElementById('modal-snack-name').textContent = name;
+        document.querySelector('#snackModal .modal-title').textContent = category;
+        document.getElementById('modal-snack-description').textContent = description;
+        document.getElementById('modal-snack-price').textContent = price;
+        document.getElementById('modal-snack-image').src = image;
+
+        // Populate dietary tags
+        const dietaryTags = document.getElementById('modal-dietary-tags');
+        dietaryTags.innerHTML = ''; // Clear existing tags
+        if (isVegan) {
+          dietaryTags.innerHTML += '<span class="badge bg-success me-1">Vegan</span>';
+        }
+        if (isGlutenFree) {
+          dietaryTags.innerHTML += '<span class="badge bg-info me-1">Gluten-Free</span>';
+        }
+        if (isNutFree) {
+          dietaryTags.innerHTML += '<span class="badge bg-warning me-1">Nut-Free</span>';
+        }
+
+        // Reset cart controls
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        const quantityControls = document.getElementById('quantity-controls');
+        const cartQuantity = document.getElementById('cart-quantity');
+        addToCartBtn.style.display = 'block';
+        quantityControls.style.display = 'none';
+        cartQuantity.textContent = '1';
+      });
+    });
+
+    // Add to Cart functionality
+    let currentQuantity = 0;
+
+    function updateCart(snackId, quantity) {
+      fetch("{% url 'add_to_cart' %}", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ snack_id: snackId, quantity: quantity })
+      })
+        .then(response => {
+          return response.json().then(data => ({ status: response.status, data }));
+        })
+        .then(({ status, data }) => {
+          if (status === 401) {
+            alert(data.message);
+            if (data.redirect) {
+              window.location.href = data.redirect;
+            }
+          } else if (data.status !== 'success') {
+            alert(data.message || 'Failed to add to cart. Please try again.');
+          } else {
+
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        });
+    }
+
+
+    document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+      const snackId = document.getElementById('modal-snack-id').value;
+      currentQuantity = 1;
+      document.getElementById('cart-quantity').textContent = currentQuantity;
+      document.getElementById('add-to-cart-btn').style.display = 'none';
+      document.getElementById('quantity-controls').style.display = 'flex';
+      updateCart(snackId, 1);
+    });
+
+    document.getElementById('increase-quantity').addEventListener('click', () => {
+      const snackId = document.getElementById('modal-snack-id').value;
+      currentQuantity += 1;
+      document.getElementById('cart-quantity').textContent = currentQuantity;
+      updateCart(snackId, 1);  // Add 1 more to the cart
+    });
+
+    document.getElementById('decrease-quantity').addEventListener('click', () => {
+      const snackId = document.getElementById('modal-snack-id').value;
+      currentQuantity -= 1;
+      if (currentQuantity <= 0) {
+        currentQuantity = 0;
+        document.getElementById('add-to-cart-btn').style.display = 'block';
+        document.getElementById('quantity-controls').style.display = 'none';
+        updateCart(snackId, -1);  // Remove 1 from the cart
+      } else {
+        document.getElementById('cart-quantity').textContent = currentQuantity;
+        updateCart(snackId, -1);  // Remove 1 from the cart
+      }
+    });
+  </script>
+</body>
+
+</html>

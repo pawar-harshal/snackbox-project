@@ -1,0 +1,724 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url("../font/Montserrat-VariableFont_wght.ttf");
+}
+
+body {
+    background-color: #eee9f7;   
+    color: #191919;
+    font-family:'Montserrat';
+}
+body.register-page {
+    background: #eee9f7;}
+body.login-page, body.profile-page {
+    background: #eee9f7;
+}
+
+body::-webkit-scrollbar {
+    display: none;                 
+}
+.navbar-brand {
+    font-weight: bold;
+}
+.text-color {
+    color: #191919;
+}
+
+.text-purple{
+    --bs-text-opacity: 1;
+    color: #a47bf0 !important;
+}
+.heading-color {
+    color: #191919; 
+}
+.light-purple{
+    color: #a47bf0;
+}
+.purple-button{
+    background-color: #a47bf0;
+    border: none;
+    color: white;
+    font-weight: 400;
+    
+
+}
+
+.navbar-internal .nav-link{
+    font-weight: 600;
+    
+}
+
+.navbar-internal .nav-link:hover {
+
+    color: #7e57c2;
+}
+
+
+
+/* login button css   */
+
+.shine-button {
+    background-color: #a47bf0;
+    color: white;
+    padding: 10px 17px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(164, 123, 240, 0.3);
+}
+
+.shine-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.shine-button:hover::before {
+  animation: shine 0.6s ease-in-out forwards;
+}
+
+.shine-button:not(:hover)::before {
+  animation: unshine 0.6s ease-in-out forwards;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+@keyframes unshine {
+  0% {
+    left: 125%;
+  }
+  100% {
+    left: -75%;
+  }
+}
+
+.shine-button:hover {
+  transform: scale(1.02);
+}
+.purple-button:hover,
+.purple-button:focus,
+.purple-button:active {
+    background-color: #c5abf4;
+    color: white;
+    box-shadow: none;
+    outline: none;
+}
+.nav-pills .nav-link.purple-button {
+  background-color: transparent;
+  color: #a47bf0;
+  transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link.purple-button.active,
+.nav-pills .nav-link.purple-button:hover,
+.nav-pills .nav-link.purple-button:focus {
+  background-color: #a47bf0;
+  color: white;
+}
+
+.navbar-bg {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #c5abf472;
+}
+.offbodymobbg{
+    background:#eee9f7;
+}
+.offhead{
+    padding-bottom: 7px;
+}
+
+.menuicon{
+    color: #191919;
+    font-size: 20px;
+}
+
+#filterForm{
+        display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: space-evenly;
+}
+
+.offcanvasicons{
+    color: #7e57c2;
+    margin-right: 30px;
+}
+.offcanvasicons::before{
+    margin-right: 13px;
+}
+
+.profile-section,.cart-section,.checkout-section{
+    height: 100dvh;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: transparent;
+  color: inherit;
+}
+
+.form-card {
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+.registration-section {
+    min-height: 90vh;
+}
+.toggle-password {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+.toggle-password:hover,
+.toggle-password:focus {
+    color: #000;
+}
+input.form-control.is-invalid {
+    background-image: none !important;
+}
+
+.homepage-wrapper .accordion-item {
+    background-color: #e9e3f4;
+}
+.homepage-hero-swiper {
+    width: 100%;
+    height: 300px; /* Default height for desktop */
+    border-radius: 12px;
+    overflow: hidden; /* Prevent overflow */
+}
+.home-slider-banner {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Match the swiper container height */
+}
+.home-slider-banner img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%; 
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.23);
+    pointer-events: none; 
+    z-index: 1;
+}
+.hero-content .first {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 3.1rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem 2rem;
+    z-index: 10;
+    pointer-events: none;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    width: 100%;
+}
+.hero-content .second {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2.2rem;
+    text-align: center;
+    padding: 1rem 2rem;
+    z-index: 10;
+    pointer-events: none;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    width: 100%;
+}
+.homepage-hero .swiper-pagination-bullet {
+    background-color: white;  
+    opacity: 0.7;
+}
+.homepage-hero .swiper-pagination-bullet-active {
+    background-color: #35466B;  
+    opacity: 1;
+}
+/* Responsive adjustments for hero section */
+@media (max-width: 992px) {  /* Tablets */
+    .homepage-hero-swiper {
+        height: 400px; /* Reduce height for tablets */
+    }
+    .hero-content .first {
+        font-size: 2.2rem;
+        top: 35%;
+        padding: 0.8rem 1.5rem;
+    }
+    .hero-content .second {
+        font-size: 1rem;
+        top: 45%;
+        padding: 0.8rem 1.5rem;
+    }
+}
+@media (max-width: 576px) {  /* Mobile phones */
+    .homepage-hero-swiper {
+        height: 150px; /* Reduce height for mobile */
+        min-height: 170px !important;
+
+    }
+    .logintop{
+        font-size: 10px;
+    }
+    .hero-content .first {
+        font-size: 1.3rem;
+        top: 30%;
+    }
+    .hero-content .second {
+        font-size: 1.2rem;
+        top: 42%;
+    }
+    .view-more-btn {
+        font-size: 9px !important;
+        border: 0.5px solid #191919;
+
+    }
+    .back-btn {
+        font-size: 9px !important;
+    }
+}
+.ml-10 {
+    margin-left: 10px;
+}
+.view-more-btn {
+    font-weight: 600;
+    color: #191919;
+    background-color: transparent;
+    border: 2px solid #191919ab;
+    padding: 1px 6px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+.view-more-btn:hover {
+    background-color: #191919;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(126, 87, 194, 0.3);
+}
+.back-btn {
+    font-weight: 600;
+    color: #191919;
+    background-color: transparent;
+    border: 2px solid #191919;
+    padding: 1px 6px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+.back-btn:hover {
+    background-color: #191919;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(126, 87, 194, 0.3);
+}
+/* Default snack card styling for larger screens */
+.food-listing-homepage .card,
+.category-listing .card,
+.search-results-section .card {
+    border: none;
+    /* border-radius: 12px; */
+    /* background-color: #ffffff; */
+    background: none;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+    overflow: hidden;
+    width: 100%;
+    max-width: 230px; 
+    margin: auto;
+}
+
+
+.category-listing .card,
+.search-results-section .card {
+    border: none;
+    /* border-radius: 12px; */
+    /* background-color: #ffffff; */
+    background: none;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+    overflow: hidden;
+    width: 100%;
+    max-width: 366px; 
+    margin: auto;
+}
+
+.food-listing-homepage .card-img-top,
+.category-listing .card-img-top,
+.search-results-section .card-img-top {
+    height: 190px;
+    object-fit: cover;
+}
+.food-listing-homepage .card-title,
+.category-listing .card-title,
+.search-results-section .card-title {
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    height: 2.5em; 
+    line-height: 1.25em;
+    overflow: hidden;
+}
+.food-listing-homepage .snack-description,
+.category-listing .snack-description,
+.search-results-section .snack-description {
+    font-size: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.food-listing-homepage .card-text,
+.category-listing .card-text,
+.search-results-section .card-text {
+    font-size: 1rem;
+}
+.food-listing-homepage .card-body,
+.category-listing .card-body,
+.search-results-section .card-body {
+    padding: 1rem; /* Bootstrap default */
+}
+/* Mobile adjustments for snack cards */
+@media (max-width: 576px) {
+    .food-listing-homepage .card,
+    .category-listing .card,
+    .search-results-section .card {
+        min-height: 200px; /* Ensure consistent minimum height for cards */
+    }
+    .food-listing-homepage .card-img-top,
+    .category-listing .card-img-top,
+    .search-results-section .card-img-top {
+        height: 120px; /* Override image height on mobile */
+    }
+    .food-listing-homepage .card-title,
+    .category-listing .card-title,
+    .search-results-section .card-title {
+        font-size: 0.9rem; /* Further reduce snack name font size */
+        margin-bottom: 0.3rem;
+    }
+    .food-listing-homepage .snack-description,
+    .category-listing .snack-description,
+    .search-results-section .snack-description {
+        font-size: 0.8rem; /* Further reduce description font size */
+        margin-bottom: 0.3rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* Limit to 1 line */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .food-listing-homepage .card-text,
+    .category-listing .card-text,
+    .search-results-section .card-text {
+        font-size: 0.85rem; /* Further reduce price font size */
+        margin-bottom: 0.3rem;
+    }
+    .food-listing-homepage .card-body,
+    .category-listing .card-body,
+    .search-results-section .card-body {
+        padding: 0.5rem; /* Further reduce padding inside card */
+    }
+    .food-listing-homepage .mb-4,
+    .category-listing .mb-4,
+    .search-results-section .mb-4 {
+        margin-bottom: 0.5rem !important; /* Reduce margin between cards */
+    }
+    /* Compact search controls on mobile */
+    .search-controls .input-group {
+        margin-bottom: 0; /* Remove extra margin */
+    }
+    .search-controls .input-group-text {
+        padding: 0.375rem 0.5rem; /* Reduce padding for icon */
+    }
+    .search-controls .form-control {
+        padding: 0.375rem 0.5rem; /* Reduce padding for input */
+        font-size: 0.85rem; /* Smaller font size */
+    }
+    .search-controls .btn {
+        padding: 0.375rem 0.5rem; /* Reduce button size */
+        font-size: 0.85rem; /* Smaller icon size */
+    }
+    .search-controls .dropdown-menu {
+        min-width: auto; /* Fit content */
+        left: auto !important;
+        right: 0; /* Align to the right to prevent overflow */
+    }
+    .search-controls .dropdown-item {
+        font-size: 0.85rem; /* Smaller font size for dropdown items */
+        padding: 0.25rem 0.75rem; /* Smaller padding */
+    }
+
+    .shine-button {
+    background-color: #a47bf0;
+    color: white;
+    padding: 7px 15px;
+    font-size: 10px;
+    border: none;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(164, 123, 240, 0.3);
+}
+}
+
+/* 
+.food-listing-homepage .card:hover,
+    .category-listing .card:hover,
+    .search-results-section .card:hover{
+        outline: 1px solid #1919194d;
+    } */
+/* Tablet adjustments for snack cards */
+
+@media screen and (min-width: 768px) and (max-width:1025px) {
+    .food-listing-homepage .card,
+    .category-listing .card,
+    .search-results-section .card {
+        min-height: 130px; 
+    }
+    .food-listing-homepage .card-img-top,
+    .category-listing .card-img-top,
+    .search-results-section .card-img-top {
+        height: 130px; /* Override image height on mobile */
+    }
+    .food-listing-homepage .card-title,
+    .category-listing .card-title,
+    .search-results-section .card-title {
+        font-size: 0.9rem; /* Further reduce snack name font size */
+        margin-bottom: 0.3rem;
+    }
+    .food-listing-homepage .snack-description,
+    .category-listing .snack-description,
+    .search-results-section .snack-description {
+        font-size: 0.8rem; /* Further reduce description font size */
+        margin-bottom: 0.3rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* Limit to 1 line */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .food-listing-homepage .card-text,
+    .category-listing .card-text,
+    .search-results-section .card-text {
+        font-size: 0.85rem; /* Further reduce price font size */
+        margin-bottom: 0.3rem;
+    }
+    .food-listing-homepage .card-body,
+    .category-listing .card-body,
+    .search-results-section .card-body {
+        padding: 0.5rem; /* Further reduce padding inside card */
+    }
+    .food-listing-homepage .mb-4,
+    .category-listing .mb-4,
+    .search-results-section .mb-4 {
+        margin-bottom: 0.5rem !important; /* Reduce margin between cards */
+    }
+    /* Compact search controls on mobile */
+    .search-controls .input-group {
+        margin-bottom: 0; /* Remove extra margin */
+    }
+    .search-controls .input-group-text {
+        padding: 0.375rem 0.5rem; /* Reduce padding for icon */
+    }
+    .search-controls .form-control {
+        padding: 0.375rem 0.5rem; /* Reduce padding for input */
+        font-size: 0.85rem; /* Smaller font size */
+    }
+    .search-controls .btn {
+        padding: 0.375rem 0.5rem; /* Reduce button size */
+        font-size: 0.85rem; /* Smaller icon size */
+    }
+    .search-controls .dropdown-menu {
+        min-width: auto; /* Fit content */
+        left: auto !important;
+        right: 0; /* Align to the right to prevent overflow */
+    }
+    .search-controls .dropdown-item {
+        font-size: 0.85rem; /* Smaller font size for dropdown items */
+        padding: 0.25rem 0.75rem; /* Smaller padding */
+    }
+}
+/* Modal styling */
+#modal-snack-image {
+    max-height: 400px;
+    object-fit: cover;
+    width: 100%;
+}
+/* Dietary tags in modal */
+#modal-dietary-tags .badge {
+    font-size: 0.9rem;
+    padding: 0.4em 0.6em;
+}
+/* Filter modal styling */
+#filterModal .modal-dialog,
+#filterModalSearch .modal-dialog {
+    max-width: 90%; /* Ensure modal fits within viewport */
+}
+#filterModal .modal-body,
+#filterModalSearch .modal-body {
+    padding: 1rem;
+}
+#filterModal .form-label,
+#filterModalSearch .form-label {
+    font-size: 0.9rem;
+}
+#filterModal .form-select,
+#filterModalSearch .form-select,
+#filterModal .form-check-label,
+#filterModalSearch .form-check-label {
+    font-size: 0.85rem;
+}
+#filterModal .form-check,
+#filterModalSearch .form-check {
+    margin-bottom: 0.5rem;
+}
+
+
+@media (min-width: 576px) {
+    #snackModal .modal-xl {
+        max-width: 90vw; /* Almost full screen width */
+        max-height: 90vh; /* Almost full screen height */
+        margin: 5vh auto; /* Center vertically and horizontally */
+    }
+    #snackModal .modal-content {
+        height: 90vh; /* Match the dialog height */
+    }
+    #snackModal .modal-body {
+        overflow-y: auto; /* Allow scrolling if content overflows */
+    }
+}
+/* On mobile, modal is already full-screen due to modal-fullscreen-sm-down */
+@media (max-width: 576px) {
+    #snackModal .modal-body .row {
+        flex-direction: column; /* Stack image and details vertically */
+    }
+    #modal-snack-image {
+        max-height: 200px; /* Reduce image height on mobile */
+        margin-bottom: 1rem;
+    }
+    #modal-dietary-tags .badge {
+        font-size: 0.7rem; /* Smaller badges on mobile */
+        padding: 0.3em 0.5em;
+    }
+}
+
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;         /* adjust size */
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #333; /* or any color */
+    background-color: #fff; /* optional */
+}
+
+
+.nosnacks{
+
+padding: 8em;
+}
+
+
+
+
+/* animated navbar  */
+
+.navbar {
+  transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+.navbar.hidden {
+  transform: translateY(-100%);
+}
+
+
+.sidebar {
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+    }
+    
+  
+    @media (max-width: 767px) {
+      .sidebar {
+        position: static;
+        margin-bottom: 2rem;
+      }
+    }
+
+
+
+#snackModal .modal-content{
+   background: rgba(255, 255, 255, 0.75); 
+  backdrop-filter: blur(10px);          
+  -webkit-backdrop-filter: blur(10px);  
+
+}
+
+.snack-card img {
+  transition: transform 0.8s ease;
+}
+
+.snack-card:hover img {
+  transform: scale(1.02);
+}
+ .homepage-hero-swiper .snack-card:hover img {
+  transform: scale(1.04);
+}
+
+
+.profile-header{
+   background-color: #a47bf0;
+   color: white;
+    
+}

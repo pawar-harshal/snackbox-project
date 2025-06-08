@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnackBox | Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'core/img/favicon.ico' %}" type="image/x-icon">
+</head>
+<body class="profile-page">
+  <!-- Navbar -->
+  {% include "core/components/navbar_internal.html" %}
+
+  <!-- Profile Section -->
+  <section class="profile-section py-5">
+    <div class="container m-lg-4 m-2">
+      <!-- Nav Pills and Content -->
+      <div class="d-flex flex-column flex-lg-row align-items-start">
+        <!-- Nav Pills -->
+        <div class="nav flex-row flex-lg-column nav-pills me-lg-3 mb-3 mb-lg-0" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <button class="nav-link  purple-button active mb-3" id="v-pills-overview-tab" data-bs-toggle="pill" data-bs-target="#v-pills-overview" type="button" role="tab" aria-controls="v-pills-overview" aria-selected="true">
+            <i class="fas fa-user "></i><span class="ml-10">Overview</span>
+          </button>
+          <button class="nav-link purple-button mb-3"  id="v-pills-address-tab" data-bs-toggle="pill" data-bs-target="#v-pills-address" type="button" role="tab" aria-controls="v-pills-address" aria-selected="false">
+            <i class="fas fa-map-marker-alt "></i><span class="ml-10">Address</span>
+          </button>
+          {% comment %} <button class="nav-link" id="v-pills-preferences-tab" data-bs-toggle="pill" data-bs-target="#v-pills-preferences" type="button" role="tab" aria-controls="v-pills-preferences" aria-selected="false">
+            <i class="fas fa-utensils "></i><span class="ml-10">Preferences</span>
+          </button> {% endcomment %}
+          <button class="nav-link purple-button mb-3" id="v-pills-editprofile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-editprofile" type="button" role="tab" aria-controls="v-pills-editprofile" aria-selected="false">
+            <i class="fas fa-edit "></i><span class="ml-10">Edit Profile</span>
+          </button>
+          <a href="{% url 'logout' %}" class="text-decoration-none">
+          
+          <button class="nav-link purple-button mb-3"  id="v-pills-editprofile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-editprofile" type="button" role="tab" aria-controls="v-pills-editprofile" aria-selected="false">
+            <i class="fas fa-sign-out-alt"></i><span class="ml-10">Logout</span>
+          </button>
+          </a>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content flex-grow-1" id="v-pills-tabContent">
+          <!-- Overview Tab -->
+          <div class="tab-pane fade show active" id="v-pills-overview" role="tabpanel" aria-labelledby="v-pills-overview-tab">
+            <div class="card shadow-sm">
+              <div class="card-header bg-light-purple text-color profile-header">
+                <h5 class="mb-0"><i class="fas fa-user me-2"></i>Profile Overview</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <p><strong>Username:</strong> {{ profile.user.username }}</p>
+                    <p><strong>Email:</strong> {{ profile.user.email }}</p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <p><strong>Full Name:</strong> {{ profile.full_name|default:"Not set" }}</p>
+                    <p><strong>Phone Number:</strong> {{ profile.phone_number|default:"Not set" }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Tab -->
+          <div class="tab-pane fade" id="v-pills-address" role="tabpanel" aria-labelledby="v-pills-address-tab">
+            <div class="card shadow-sm">
+              <div class="card-header bg-light-purple text-color profile-header">
+                <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Shipping Address</h5>
+              </div>
+              <div class="card-body">
+                {% if profile.street or profile.city or profile.state or profile.postal_code or profile.country %}
+                  <p>{{ profile.street|default:"" }}</p>
+                  <p>{{ profile.city|default:"" }}{% if profile.state %}, {{ profile.state }}{% endif %}</p>
+                  <p>{{ profile.postal_code|default:"" }}{% if profile.country %}, {{ profile.country }}{% endif %}</p>
+                {% else %}
+                  <p class="text-muted">No address set.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          {% comment %} <!-- Preferences Tab -->
+          <div class="tab-pane fade" id="v-pills-preferences" role="tabpanel" aria-labelledby="v-pills-preferences-tab">
+            <div class="card shadow-sm">
+              <div class="card-header bg-light-purple text-color">
+                <h5 class="mb-0"><i class="fas fa-utensils me-2"></i>Dietary Preferences</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <p><strong>Vegan:</strong> {% if profile.is_vegan %}Yes{% else %}No{% endif %}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p><strong>Gluten-Free:</strong> {% if profile.is_gluten_free %}Yes{% else %}No{% endif %}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <p><strong>Nut-Free:</strong> {% if profile.is_nut_free %}Yes{% else %}No{% endif %}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> {% endcomment %}
+
+          <!-- Edit Profile Tab -->
+          <div class="tab-pane fade" id="v-pills-editprofile" role="tabpanel" aria-labelledby="v-pills-editprofile-tab">
+            <div class="card shadow-sm">
+              <div class="card-header bg-light-purple text-color profile-header">
+                <h5 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Profile</h5>
+              </div>
+              <div class="card-body">
+                <form method="POST">
+                  {% csrf_token %}
+                  <!-- Basic Info -->
+                  <h6 class="mb-3">Basic Information</h6>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="full_name" class="form-label">Full Name</label>
+                      <input type="text" name="full_name" id="full_name" class="form-control" placeholder="Enter your full name" value="{{ profile.full_name|default_if_none:'' }}">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="phone_number" class="form-label">Phone Number</label>
+                      <input type="text" name="phone_number" id="phone_number" class="form-control" placeholder="Enter your phone number" value="{{ profile.phone_number|default_if_none:'' }}">
+                    </div>
+                  </div>
+
+                  <!-- Address Info -->
+                  <h6 class="mb-3">Shipping Address</h6>
+                  <div class="mb-3">
+                    <label for="street" class="form-label">Street Address</label>
+                    <input type="text" name="street" id="street" class="form-control" placeholder="Street address" value="{{ profile.street|default_if_none:'' }}">
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="city" class="form-label">City</label>
+                      <input type="text" name="city" id="city" class="form-control" placeholder="City" value="{{ profile.city|default_if_none:'' }}">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="state" class="form-label">State</label>
+                      <input type="text" name="state" id="state" class="form-control" placeholder="State" value="{{ profile.state|default_if_none:'' }}">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="postal_code" class="form-label">Postal Code</label>
+                      <input type="text" name="postal_code" id="postal_code" class="form-control" placeholder="Postal Code" value="{{ profile.postal_code|default_if_none:'' }}">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="country" class="form-label">Country</label>
+                      <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="{{ profile.country|default_if_none:'' }}">
+                    </div>
+                  </div>
+
+                  <!-- Dietary Preferences -->
+                  {% comment %} <h6 class="mb-3">Dietary Preferences</h6>
+                  <div class="row mb-3">
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input type="checkbox" name="is_vegan" id="is_vegan" class="form-check-input" {% if profile.is_vegan %}checked{% endif %}>
+                        <label class="form-check-label" for="is_vegan">Vegan</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input type="checkbox" name="is_gluten_free" id="is_gluten_free" class="form-check-input" {% if profile.is_gluten_free %}checked{% endif %}>
+                        <label class="form-check-label" for="is_gluten_free">Gluten-Free</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input type="checkbox" name="is_nut_free" id="is_nut_free" class="form-check-input" {% if profile.is_nut_free %}checked{% endif %}>
+                        <label class="form-check-label" for="is_nut_free">Nut-Free</label>
+                      </div>
+                    </div>
+                  </div> {% endcomment %}
+
+                  <button type="submit" class="btn purple-button w-100">Save Changes</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  {% include "core/components/footer.html" %}
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

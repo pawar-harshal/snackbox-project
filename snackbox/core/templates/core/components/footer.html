@@ -1,0 +1,134 @@
+{% load static %}
+
+ {% include "core/components/marquee_icons.html" %}
+
+<footer class="footer-section bg-light py-5">
+  <div class="container-fluid" style="padding-inline: 24px;">
+    <div class="row">
+      <!-- Logo and Description -->
+      <div class="col-12 col-md-4 mb-4">
+        <a href="{% url 'home' %}" class="footer-logo">
+          <img src="{% static 'core/img/snackbox-logo.png' %}" alt="SnackBox Logo" height="60">
+        </a>
+        <p class="mt-3 text-muted">
+          SnackBox brings you a curated selection of healthy, delicious snacks that cater to all dietary needs. From vegan to gluten-free, we’ve got your cravings covered!
+        </p>
+        <div class="social-media mt-3">
+          <h6 class="mb-2">Follow Us</h6>
+          <a href="https://facebook.com" target="_blank" class="me-2">
+            <i class="fab fa-facebook fa-lg" style="color: #a855f7;"></i>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="me-2">
+            <i class="fab fa-instagram fa-lg" style="color: #a855f7;"></i>
+          </a>
+        
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="col-12 col-md-4 mb-4">
+        <h6 class="mb-3 text-uppercase" style="color: #a855f7;">Explore</h6>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href="{% url 'home' %}" class="text-decoration-none text-muted">Home</a></li>
+          <li class="mb-2"><a href="{% url 'category_detail' 'chips-crisps' %}" class="text-decoration-none text-muted">Chips & Crisps</a></li>
+          <li class="mb-2"><a href="{% url 'category_detail' 'bars-bites' %}" class="text-decoration-none text-muted">Bars & Bites</a></li>
+          <li class="mb-2"><a href="{% url 'category_detail' 'popcorn-puffs' %}" class="text-decoration-none text-muted">Popcorn & Puffs</a></li>
+          <li class="mb-2"><a href="{% url 'category_detail' 'crackers-clusters' %}" class="text-decoration-none text-muted">Crackers & Clusters</a></li>
+          <li class="mb-2"><a href="{% url 'category_detail' 'dried-fruits-slices' %}" class="text-decoration-none text-muted">Dried Fruits & Slices</a></li>
+          <li class="mb-2"><a href="{% url 'category_detail' 'roasted-spiced-snacks' %}" class="text-decoration-none text-muted">Roasted & Spiced Snacks</a></li>
+          <li class="mb-2"><a href="{% url 'category_detail' 'specialty-snacks' %}" class="text-decoration-none text-muted">Specialty Snacks</a></li>
+          <li class="mb-2"><a href="{% url 'about_us' %}" class="text-decoration-none text-muted">About Us</a></li>
+          <li class="mb-2"><a href="{% url 'contact_us' %}" class="text-decoration-none text-muted">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter Signup and Contact -->
+      <div class="col-12 col-md-4 mb-4">
+        <h6 class="mb-3 text-uppercase" style="color: #a855f7;">Stay Connected</h6>
+        <p class="text-muted">Subscribe to our newsletter for exclusive offers and updates!</p>
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email">
+          <button class="btn shine-button" type="button">Subscribe</button>
+        </div>
+        <h6 class="mt-4 mb-3 text-uppercase" style="color: #a855f7;">Contact Us</h6>
+        <p class="text-muted mb-1"><i class="fas fa-envelope me-2"></i> support@snackbox.com</p>
+        <p class="text-muted mb-1"><i class="fas fa-phone me-2"></i> +91 99999 99999</p>
+        <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i> 123 High Street, Thane City, 400606</p>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center text-muted pt-4 border-top">
+      <p class="mb-0">&copy; {% now "Y" %} SnackBox. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer-section {
+  background-color: #f8f9fa;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  font-size: 0.9rem;
+}
+
+.footer-section a:hover {
+  color: #a855f7 !important;
+}
+
+.footer-section .shine-button {
+  background-color: #a47bf0;
+  color: white;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(164, 123, 240, 0.3);
+}
+
+.footer-section .shine-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.footer-section .shine-button:hover::before {
+  animation: shine 0.6s ease-in-out forwards;
+}
+
+.footer-section .shine-button:not(:hover)::before {
+  animation: unshine 0.6s ease-in-out forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+@keyframes unshine {
+  0% { left: 125%; }
+  100% { left: -75%; }
+}
+
+.footer-section .shine-button:hover {
+  transform: scale(1.02);
+}
+a{
+  text-decoration: none !important; 
+}
+</style>

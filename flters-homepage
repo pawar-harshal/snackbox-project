@@ -1,0 +1,80 @@
+<!-- Search, Sort, and Filter Controls -->
+<div class="accordion container-fluid mt-2" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button bg-transparent" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Refine Search
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <section class="search-controls py-3">
+                    <div class="container-fluid">
+                        <form method="get" action="{% url 'search_results' %}" class="row g-3">
+                            <div class="col-12 col-md-4">
+                                <div class="input-group">
+                                    <input type="text" name="q" class="form-control" placeholder="Search snacks..."
+                                        value="{{ request.GET.q|default:'' }}" />
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-md-4 d-flex gap-2">
+                                <div class="w-50">
+                                    <select name="sort" class="form-select" onchange="this.form.submit()">
+                                        <option value="name_asc" {% if request.GET.sort=='name_asc' or not
+                                            request.GET.sort %}selected{% endif %}>Name (A-Z)</option>
+                                        <option value="name_desc" {% if request.GET.sort=='name_desc' %}selected{% endif
+                                            %}>Name (Z-A)
+                                        </option>
+                                        <option value="price_asc" {% if request.GET.sort=='price_asc' %}selected{% endif
+                                            %}>Price (Low
+                                            to High)</option>
+                                        <option value="price_desc" {% if request.GET.sort=='price_desc' %}selected{%
+                                            endif %}>Price
+                                            (High to Low)</option>
+                                    </select>
+                                </div>
+
+                                <div class="w-50">
+                                    <select name="category" class="form-select" onchange="this.form.submit()">
+                                        <option value="">All Categories</option>
+                                        {% for slug, display in category_choices %}
+                                        <option value="{{ slug }}" {% if request.GET.category==slug %}selected{% endif
+                                            %}>{{ display }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 d-flex align-items-center flex-wrap justify-content-between">
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="is_vegan" class="form-check-input" id="veganFilterHome"
+                                        {% if request.GET.is_vegan %}checked{% endif %} onchange="this.form.submit()" />
+                                    <label class="form-check-label" for="veganFilterHome">Vegan</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="is_gluten_free" class="form-check-input"
+                                        id="glutenFreeFilterHome" {% if request.GET.is_gluten_free %}checked{% endif %}
+                                        onchange="this.form.submit()" />
+                                    <label class="form-check-label" for="glutenFreeFilterHome">Gluten-Free</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="is_nut_free" class="form-check-input"
+                                        id="nutFreeFilterHome" {% if request.GET.is_nut_free %}checked{% endif %}
+                                        onchange="this.form.submit()" />
+                                    <label class="form-check-label" for="nutFreeFilterHome">Nut-Free</label>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+</div>
